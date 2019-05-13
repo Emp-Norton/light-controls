@@ -10,6 +10,10 @@ class Application(tk.Frame):
         self.pack()
         self.create_widgets()
 
+    def write_to_log(self, data):
+        with open('/home/pi/sandbox/log.txt', 'a') as file:
+            file.write('written {}\n{}\n'.format(datetime.datetime.now(), data))
+
     def handle_errors(self, e):
         print('Exception: {}'.format(e))
         self.write_to_log(e)
