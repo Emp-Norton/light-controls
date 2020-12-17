@@ -1,7 +1,13 @@
 const express = require('express');
 const g = require('onoff').Gpio
 const app = express();
-const lamp = new g(16, 'out');
+
+const args = process.argv.slice(2);
+const room = args[0]
+const port = args[1]
+const pin = args[2]
+const lamp = new g(pin, 'out');
+
 
 const on = () => {
     lamp.writeSync(1);
@@ -13,12 +19,12 @@ const off = () => {
 
 app.get('/lights-on', (req, res) => {
     on();
-    res.send(`ack'd: on`);
+    res.send(`{} lights ack'd: on`);
 })
 app.get('/lights-off', (req, res) => {
     off();
-    res.send(`ack'd: off`);
+    res.send(`{} lights ack'd: off`);
 })
-app.listen(4321, ()=> {
-    console.log('Listening on 4321');
+app.listen(port, ()=> {
+    console.log(`Listening on ${port}`);
 })
