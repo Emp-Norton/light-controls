@@ -13,12 +13,12 @@ const off = () => {
 
 app.get('/lights-on', (req, res) => {
     on();
-    res.send(`ack'd: on`);
+    res.send(`bedroom ack'd: on`);
 })
 app.get('/lights-off', (req, res) => {
     off();
-    res.send(`ack'd: off`);
+    res.send(`bedroom ack'd: off`);
 })
-app.listen(4321, ()=> {
-    console.log('Listening on 4321');
+app.listen(8080, ()=> {
+    console.log('Listening on 8080');
 })
