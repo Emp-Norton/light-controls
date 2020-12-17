@@ -3,14 +3,15 @@ from Tkinter import Label, Frame
 import datetime
 import requests
 import time
+import sys
 
 args = sys.argv
 bedroom_ip = args[1]
 livingroom_ip = args[2]
 port = args[3]
 COMMANDS = {}
-COMMANDS.OFF = 'off'
-COMMANDS.OFF = 'on'
+COMMANDS['OFF'] = 'off'
+COMMANDS['ON'] = 'on'
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -42,21 +43,21 @@ class Application(tk.Frame):
     
     def light_handler(self, ip, command):
         try:
-            requests.get('http://{}:{}}/lights-{}'.format(ip, port, command))
+            requests.get('http://{}:{}/lights-{}'.format(ip, port, command))
         except Exception as e:
             self.handle_errors(e)
 
     def bedroom_lights_on(self):
-        light_handler(bedroom_ip, COMMANDS.ON)
+        self.light_handler(bedroom_ip, COMMANDS['ON'])
 
     def bedroom_lights_off(self):
-        light_handler(bedroom_ip, COMMANDS.OFF)
+        self.light_handler(bedroom_ip, COMMANDS['OFF'])
 
     def livingroom_lights_on(self):    
-        light_handler(livingroom_ip, COMMANDS.ON)
+        self.light_handler(livingroom_ip, COMMANDS['ON'])
 
     def livingroom_lights_off(self):
-        light_handler(livingroom_ip, COMMANDS.OFF)
+        self.light_handler(livingroom_ip, COMMANDS['OFF'])
 
             #TODO Reimplement this when PIRs back in place
  #    def start_motion(self):
@@ -84,19 +85,17 @@ class Application(tk.Frame):
         # self.motion_off_button = tk.Button(self, padx='50', pady='25')
         # self.motion_on_button = tk.Button(self, padx='50', pady='25')
 
+        self.livingroom_lights_off_button["text"] = "Living room OFF"
+        self.livingroom_lights_off_button["command"] = self.livingroom_lights_off
 
+        self.livingroom_lights_on_button["text"] = "Living room ON"
+        self.livingroom_lights_on_button["command"] = self.livingroom_lights_on
 
-    self.livingroom_lights_off_button["text"] = "Living room OFF"
-    self.livingroom_lights_off_button["command"] = self.livingroom_lights_off
+        self.bedroom_lights_off_button["text"] = "Bedroom OFF"
+        self.bedroom_lights_off_button["command"] = self.bedroom_lights_off
 
-    self.livingroom_lights_on_button["text"] = "Living room ON"
-    self.livingroom_lights_on_button["command"] = self.livingroom_lights_on
-
-    self.bedroom_lights_off_button["text"] = "Bedroom OFF"
-    self.bedroom_lights_off_button["command"] = self.bedroom_lights_off
-
-    self.bedroom_lights_on_button["text"] = "Bedroom ON"
-    self.bedroom_lights_on_button["command"] = self.bedroom_lights_on
+        self.bedroom_lights_on_button["text"] = "Bedroom ON"
+        self.bedroom_lights_on_button["command"] = self.bedroom_lights_on
 
 
     # self.motion_on_button["text"] = "Motion On"
@@ -107,16 +106,16 @@ class Application(tk.Frame):
     # self.motion_off_button["command"] = self.stop_motion
 
 
-    self.livingroom_lights_off_button.pack(side="top")
-    self.livingroom_lights_on_button.pack(side="top")
-    self.bedroom_lights_off_button.pack(side="top")
-    self.bedroom_lights_on_button.pack(side="top")
-    # self.motion_off_button.pack(side="top")
-    # self.motion_on_button.pack(side="top")
+        self.livingroom_lights_off_button.pack(side="top")
+        self.livingroom_lights_on_button.pack(side="top")
+        self.bedroom_lights_off_button.pack(side="top")
+        self.bedroom_lights_on_button.pack(side="top")
+        # self.motion_off_button.pack(side="top")
+        # self.motion_on_button.pack(side="top")
 
-    self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy, padx='50', pady='50')
-    
-    self.quit.pack(side="bottom")
+        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy, padx='50', pady='50')
+        
+        self.quit.pack(side="bottom")
 
 root = tk.Tk()
 root.title('Light Controls')
