@@ -85,17 +85,17 @@ class Application(tk.Frame):
         # self.motion_off_button = tk.Button(self, padx='50', pady='25')
         # self.motion_on_button = tk.Button(self, padx='50', pady='25')
 
-        self.livingroom_lights_off_button["text"] = "Living room OFF"
-        self.livingroom_lights_off_button["command"] = self.livingroom_lights_off
-
-        self.livingroom_lights_on_button["text"] = "Living room ON"
-        self.livingroom_lights_on_button["command"] = self.livingroom_lights_on
+        self.bedroom_lights_on_button["text"] = "Bedroom ON"
+        self.bedroom_lights_on_button["command"] = self.bedroom_lights_on
 
         self.bedroom_lights_off_button["text"] = "Bedroom OFF"
         self.bedroom_lights_off_button["command"] = self.bedroom_lights_off
 
-        self.bedroom_lights_on_button["text"] = "Bedroom ON"
-        self.bedroom_lights_on_button["command"] = self.bedroom_lights_on
+        self.livingroom_lights_on_button["text"] = "Living room ON"
+        self.livingroom_lights_on_button["command"] = self.livingroom_lights_on
+
+        self.livingroom_lights_off_button["command"] = self.livingroom_lights_off
+        self.livingroom_lights_off_button["text"] = "Living room OFF"
 
 
     # self.motion_on_button["text"] = "Motion On"
