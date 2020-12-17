@@ -19,11 +19,11 @@ const off = () => {
 
 app.get('/lights-on', (req, res) => {
     on();
-    res.send(`{} lights ack'd: on`);
+    res.send(`${room} lights ack'd: on`);
 })
 app.get('/lights-off', (req, res) => {
     off();
-    res.send(`{} lights ack'd: off`);
+    res.send(`${room} lights ack'd: off`);
 })
 app.listen(port, ()=> {
     console.log(`Listening on ${port}`);
