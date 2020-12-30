@@ -4,14 +4,16 @@ import datetime
 import requests
 import time
 import sys
+from decouple import config
+    
 
-args = sys.argv
-bedroom_ip = args[1]
-livingroom_ip = args[2]
-port = args[3]
 COMMANDS = {}
 COMMANDS['OFF'] = 'off'
 COMMANDS['ON'] = 'on'
+bedroom_ip = str(config('BEDROOMIP'))
+livingroom_ip = str(config('LIVINGROOMIP'))
+img_path = str(config('IMGPATH'))
+port = str(config('PORT'))
 
 class Application(tk.Frame):
     def __init__(self, master=None):
