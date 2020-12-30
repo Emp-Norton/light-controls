@@ -5,7 +5,7 @@ import requests
 import time
 import sys
 from decouple import config
-    
+from PIL import ImageTk, Image
 
 COMMANDS = {}
 COMMANDS['OFF'] = 'off'
@@ -73,6 +73,9 @@ class Application(tk.Frame):
         self.livingroom_lights_on_button = tk.Button(self, padx='50', pady='25')
         # self.motion_off_button = tk.Button(self, padx='50', pady='25')
         # self.motion_on_button = tk.Button(self, padx='50', pady='25')
+        self.bedroom_on_img = ImageTk.PhotoImage(Image.open(img_path))
+        panel = tk.Label(root, image=self.bedroom_on_img)
+        panel.pack(side='bottom', fill='both', expand='yes')
 
         self.bedroom_lights_on_button["text"] = "Bedroom ON"
         self.bedroom_lights_on_button["command"] = self.bedroom_lights_on
