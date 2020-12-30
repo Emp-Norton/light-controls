@@ -28,19 +28,6 @@ class Application(tk.Frame):
         print('Exception: {}'.format(e))
         self.write_to_log(e)
 
-    # TODO Nix when handler works
-    # def lights_off(self, ip):
-    #     try:
-    #         requests.get('http://{}:{}}/lights-off'.format(ip, port))
-    #     except Exception as e:
-    #         self.handle_errors(e)
-
-    # def lights_on(self, ip):
-    #     try:
-    #         requests.get('http://{}:{}}/lights-on'.format(ip, port))
-    #     except Exception as e:
-    #         self.handle_errors(e)
-    
     def light_handler(self, ip, command):
         try:
             requests.get('http://{}:{}/lights-{}'.format(ip, port, command))
