@@ -59,6 +59,10 @@ class Application(tk.Frame):
         panel = tk.Label(root, image=self.bedroom_off_img)
         panel.pack(side='bottom', fill='both', expand='yes')
 
+    # TODO: refactor this to be a handler for both rooms, call functions above to load depending on room state
+    def load_light_indicators(self, state, room):
+
+
 
             #TODO Reimplement this when PIRs back in place
  #    def start_motion(self):
