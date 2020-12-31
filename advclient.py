@@ -12,7 +12,8 @@ COMMANDS['OFF'] = 'off'
 COMMANDS['ON'] = 'on'
 bedroom_ip = str(config('BEDROOMIP'))
 livingroom_ip = str(config('LIVINGROOMIP'))
-img_path = str(config('IMGPATH'))
+on_img_path = str(config('ONIMGPATH'))
+off_img_path = str(config('OFFIMGPATH'))
 port = str(config('PORT'))
 
 class Application(tk.Frame):
@@ -48,6 +49,17 @@ class Application(tk.Frame):
     def livingroom_lights_off(self):
         self.light_handler(livingroom_ip, COMMANDS['OFF'])
 
+    def load_on_indicator(self):
+        self.bedroom_on_img = ImageTk.PhotoImage(Image.open(on_img_path))
+        panel = tk.Label(root, image=self.bedroom_on_img)
+        panel.pack(side='bottom', fill='both', expand='yes')
+
+    def load_off_indicator(self):
+        self.bedroom_off_img = ImageTk.PhotoImage(Image.open(off_img_path))
+        panel = tk.Label(root, image=self.bedroom_off_img)
+        panel.pack(side='bottom', fill='both', expand='yes')
+
+
             #TODO Reimplement this when PIRs back in place
  #    def start_motion(self):
     # try:
@@ -75,9 +87,6 @@ class Application(tk.Frame):
         # self.motion_on_button = tk.Button(self, padx='50', pady='25')
 
         # TODO: cut this image in half, create logic to store state of each light and render appropriate (on or off) image. Will likely need to move buttons to facilitate this visually. 
-        self.bedroom_on_img = ImageTk.PhotoImage(Image.open(img_path))
-        panel = tk.Label(root, image=self.bedroom_on_img)
-        panel.pack(side='bottom', fill='both', expand='yes')
 
         self.bedroom_lights_on_button["text"] = "Bedroom ON"
         self.bedroom_lights_on_button["command"] = self.bedroom_lights_on
@@ -90,6 +99,8 @@ class Application(tk.Frame):
 
         self.livingroom_lights_off_button["command"] = self.livingroom_lights_off
         self.livingroom_lights_off_button["text"] = "Living room OFF"
+        self.load_on_indicator()
+        self.load_off_indicator()
 
 
     # self.motion_on_button["text"] = "Motion On"
