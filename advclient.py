@@ -43,18 +43,20 @@ class Application(tk.Frame):
 
     def bedroom_lights_on(self):
         self.light_handler(bedroom_ip, COMMANDS['ON'])
-        self.get_refreshed_image('on')
+        self.get_refreshed_image('on', 'bed')
 
     def bedroom_lights_off(self):
         self.light_handler(bedroom_ip, COMMANDS['OFF'])
-        self.get_refreshed_image('off')
+        self.get_refreshed_image('off', 'bed')
 
     def livingroom_lights_on(self):    
         self.light_handler(livingroom_ip, COMMANDS['ON'])
+        self.get_refreshed_image('on', 'living')
 
     def livingroom_lights_off(self):
         self.light_handler(livingroom_ip, COMMANDS['OFF'])
-
+        self.get_refreshed_image('off', 'living')
+ 
     def load_on_indicator(self):
         self.bedroom_on_img = ImageTk.PhotoImage(Image.open(on_img_path))
         panel = tk.Label(root, image=self.bedroom_on_img)
@@ -67,12 +69,14 @@ class Application(tk.Frame):
         panel.pack(side='bottom', fill='both', expand='yes')
         imgs[0] = panel
 
-    def get_refreshed_image(self, state):
+    def get_refreshed_image(self, state, room):
+        ROOMS = {'living': 0, 'bed': 1}
+        r = ROOMS[room]
         if state is 'on':
-            imgs[0].config(image=self.bedroom_on_img)
+            imgs[r].config(image=self.bedroom_on_img)
         else:
-            imgs[0].config(image=self.bedroom_off_img)
-            
+            imgs[r].config(image=self.bedroom_off_img)
+
     # TODO: refactor this to be a handler for both rooms, call functions above to load depending on room state
     def load_light_indicators(self):
         if room_state is 'on':
