@@ -2,8 +2,6 @@ import Tkinter as tk
 from Tkinter import Label, Frame
 import datetime
 import requests
-import time
-import sys
 from decouple import config
 from PIL import ImageTk, Image
 
