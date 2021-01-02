@@ -42,15 +42,10 @@ class Application(tk.Frame):
             self.handle_errors(e)
 
     def bedroom_lights_on(self):
-        print('Calling handler ON')
-        room_state = 'on'
         self.light_handler(bedroom_ip, COMMANDS['ON'])
         self.get_refreshed_image('on')
 
     def bedroom_lights_off(self):
-        print('Calling handler OFF')
-        room_state = 'off'
-        print(room_state)
         self.light_handler(bedroom_ip, COMMANDS['OFF'])
         self.get_refreshed_image('off')
 
@@ -74,17 +69,10 @@ class Application(tk.Frame):
 
     def get_refreshed_image(self, state):
         if state is 'on':
-            print('Ref: On --- Actual {}'.format(room_state))
-            # self.bedroom_off_img = ImageTk.PhotoImage(Image.open(off_img_path))
-            # imgs[0] = tk.Label(root, image=self.bedroom_on_img)
-            # imgs[0].pack(side='bottom', fill='both', expand='yes')
             imgs[0].config(image=self.bedroom_on_img)
         else:
-            print('Ref: Off --- Actual: {}'.format(room_state))
-            self.bedroom_off_img = ImageTk.PhotoImage(Image.open(off_img_path))
-            # panel = tk.Label(root, image=self.bedroom_off_img)
-            # imgs[0] = tk.Label(root, image=self.bedroom_off_img)
             imgs[0].config(image=self.bedroom_off_img)
+            
     # TODO: refactor this to be a handler for both rooms, call functions above to load depending on room state
     def load_light_indicators(self):
         if room_state is 'on':
