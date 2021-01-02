@@ -75,7 +75,7 @@ class Application(tk.Frame):
         else:
             imgs[r].config(image=self.bedroom_off_img)
 
-    # TODO: refactor this to be a handler for both rooms, call functions above to load depending on room state
+    # TODO: refactor this to determine state on load, maybe env?
     def load_light_indicators(self):
         if room_state is 'on':
             self.load_on_indicator()
