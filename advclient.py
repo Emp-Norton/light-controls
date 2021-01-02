@@ -15,6 +15,9 @@ livingroom_ip = str(config('LIVINGROOMIP'))
 on_img_path = str(config('ONIMGPATH'))
 off_img_path = str(config('OFFIMGPATH'))
 port = str(config('PORT'))
+REFRESH_DELAY=1500
+room_state = 'on'
+imgs = [None, None]
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -33,15 +36,23 @@ class Application(tk.Frame):
 
     def light_handler(self, ip, command):
         try:
+            print('Trying')
             requests.get('http://{}:{}/lights-{}'.format(ip, port, command))
         except Exception as e:
             self.handle_errors(e)
 
     def bedroom_lights_on(self):
+        print('Calling handler ON')
+        room_state = 'on'
         self.light_handler(bedroom_ip, COMMANDS['ON'])
+        self.get_refreshed_image('on')
 
     def bedroom_lights_off(self):
+        print('Calling handler OFF')
+        room_state = 'off'
+        print(room_state)
         self.light_handler(bedroom_ip, COMMANDS['OFF'])
+        self.get_refreshed_image('off')
 
     def livingroom_lights_on(self):    
         self.light_handler(livingroom_ip, COMMANDS['ON'])
@@ -53,14 +64,33 @@ class Application(tk.Frame):
         self.bedroom_on_img = ImageTk.PhotoImage(Image.open(on_img_path))
         panel = tk.Label(root, image=self.bedroom_on_img)
         panel.pack(side='bottom', fill='both', expand='yes')
+        imgs[1] = panel
 
     def load_off_indicator(self):
         self.bedroom_off_img = ImageTk.PhotoImage(Image.open(off_img_path))
         panel = tk.Label(root, image=self.bedroom_off_img)
         panel.pack(side='bottom', fill='both', expand='yes')
+        imgs[0] = panel
 
+    def get_refreshed_image(self, state):
+        if state is 'on':
+            print('Ref: On --- Actual {}'.format(room_state))
+            # self.bedroom_off_img = ImageTk.PhotoImage(Image.open(off_img_path))
+            # imgs[0] = tk.Label(root, image=self.bedroom_on_img)
+            # imgs[0].pack(side='bottom', fill='both', expand='yes')
+            imgs[0].config(image=self.bedroom_on_img)
+        else:
+            print('Ref: Off --- Actual: {}'.format(room_state))
+            self.bedroom_off_img = ImageTk.PhotoImage(Image.open(off_img_path))
+            # panel = tk.Label(root, image=self.bedroom_off_img)
+            # imgs[0] = tk.Label(root, image=self.bedroom_off_img)
+            imgs[0].config(image=self.bedroom_off_img)
     # TODO: refactor this to be a handler for both rooms, call functions above to load depending on room state
-    def load_light_indicators(self, state, room):
+    def load_light_indicators(self):
+        if room_state is 'on':
+            self.load_on_indicator()
+        else:
+            self.load_off_indicator()
 
 
 
@@ -139,5 +169,6 @@ liner = Frame(bd=1)
 liner.pack(fill='both', side="bottom", pady=5)
 
 app = Application(master=root)
+# app.loop_refresh()
 app.mainloop()
 
